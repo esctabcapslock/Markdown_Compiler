@@ -1,0 +1,44 @@
+/* https://62che.com/blog/vuepress/이미지에-캡션-달기.html#힌트/ */
+/* img{
+    width: 700px;
+    display: block; 
+    margin: 0px auto;
+} */
+/* 
+img+em{
+    display: block;
+    margin: 5px auto;
+    color: darkgray;
+    text-align: center;
+} */
+
+img,video{
+    width: 700px;
+    display: block; 
+    margin: 0px auto;
+}
+
+img+em, video+em, table+p>em{
+    display: block;
+    margin: 5px auto;
+    color: gray;
+    text-align: center;
+}
+
+td:empty{
+    background-color: whitesmoke;
+}
+td:not(td:empty){
+    background-color:gainsboro;
+}
+td{
+    color: black;
+}
+
+table{
+	margin: 0 auto;
+}
+
+#contents li{
+    list-style: none;
+}
