@@ -1,12 +1,16 @@
 const hljs = require('highlight.js');
 const fs = require('fs')
+const argvs = process.argv.slice(2);
 
-var input = fs.readFileSync('./example.md').toString()
-var input = fs.readFileSync('./exm2.md').toString()
-var input = fs.readFileSync('./main.md').toString()
+// var input = fs.readFileSync('./example.md').toString()
+// var input = fs.readFileSync('./exm2.md').toString()
+// var input = fs.readFileSync('./main.md').toString()
+var input = fs.readFileSync(argvs[0]).toString()
 var style = fs.readFileSync('./style.css').toString()
 var add_style = fs.readFileSync('./add_style.css').toString()
 var highlight_style = fs.readFileSync('./node_modules/highlight.js/styles/github.css').toString()
+
+console.log('[argv]',argvs);
 
 
 let out=''
@@ -35,11 +39,11 @@ function add_contents(cnt, txt){
     
     let deep = cnt-1;
     
-    console.log('[contents_index]',contents_index)
+    //console.log('[contents_index]',contents_index)
     if(contents_index[deep]!=undefined) contents_index[deep]++;
     while(contents_index[deep]==undefined) contents_index.push(1)
     while(contents_index.length > cnt) contents_index.pop()
-    console.log('[contents_index]',contents_index)
+    // /console.log('[contents_index]',contents_index)
 
     let a = ''
     if(deep) a=`<a href='#contents'>${contents_index.slice().splice(1).join('.')}.</a>`
@@ -218,7 +222,7 @@ function line2html(line, pre_tags){
         if(line.startsWith('  ')) line = line.substr( Math.min(6, line.indexOf(line.trim()[0])))
         else line = line.substr(1)
 
-        console.log('[\\t]',tag)
+        //console.log('[\\t]',tag)
         
         if(pre_tags.length < tag.length)
             if(['ul','ol', 'li'].includes(get_tag_top()) || [ 'ul|li|p','ol|li|p','ul|li', 'ol|li','pre|code','blockquote|p', 'ol|li|p'].includes(get_tag_list_top().join('|'))){ //구조를 위해 들여쓰기 된 것.
@@ -237,7 +241,7 @@ function line2html(line, pre_tags){
     else if(art.split('').every(v=>v=='#')) {
         change_tag(pre_tags)
         const len = art.length;
-        console.log(`h${len}`)
+        //console.log(`h${len}`)
         //console.log(len,b[i], '[ii]', ii, !ii.length)
         ii.splice(0,1);
         const iii = ii.join(' ');
@@ -274,7 +278,7 @@ function line2html(line, pre_tags){
         let cnt;
         let kk = line.trim()
         for(cnt=0; cnt<kk.length && kk[cnt]=='>'; cnt++);
-        console.log('[>>]', cnt)
+        //console.log('[>>]', cnt)
 
         for(let i=0; i<cnt; i++) list_push(pre_tags, ['blockquote', 'p'])
         change_tag(pre_tags)
@@ -352,7 +356,7 @@ function table2html(arr){
 function code2html(arr, len){
     const html = hljs[len?'highlight':'highlightAuto'](arr.join('\n'), {language: len}).value
     
-    console.log('[code2html] arr',arr, '[language]', len, html)
+    //console.log('[code2html] arr',arr, '[language]', len, html)
     return  `<pre><code class="${len?`language-${len.trim()}`:''}"><div>${html}</div></code></pre>`
 }
 
@@ -467,7 +471,8 @@ out=`<div id='contents'>
 </div>
 `+out;
 
-const prevent_copy = require('./prevent_copy').prevent_copy
+const prevent_copy = require('./prevent_copy').prevent_copy;
+const { argv } = require('process');
 //console.log('[prevent_copy]',prevent_copy)
 out=prevent_copy(out)
 
@@ -492,3 +497,4 @@ out+='</body>\n</html>\n'
 fs.writeFile('tmp.html',out, err=>{
     if(err) console.log(err)
 })
+
