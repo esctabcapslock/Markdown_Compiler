@@ -183,8 +183,6 @@ function html(text){
         .replace(/>/g, '&gt;')
         .replace(/\\\[/g,'[')
         .replace(/\\\]/g,']')
-        .replace(/\\\(/g,'(')
-        .replace(/\\\)/g,')')
         .replace(/\\\./g,'.')
         .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
         .replace(/\*(.*?)\*/g,'<em>$1</em>')
@@ -198,6 +196,8 @@ function html(text){
 
 //    .replace(/\[\^\s*(.*?)\s*\]/g,'<sup class="footnote-ref"><a href="#fn$1" id="fnref$1">[$1]</a></sup>')
         //
+        // .replace(/\\\(/g,'(')
+        // .replace(/\\\)/g,')')
 }
 
 
@@ -471,10 +471,10 @@ out=`<div id='contents'>
 </div>
 `+out;
 
-const prevent_copy = require('./prevent_copy').prevent_copy;
-const { argv } = require('process');
-//console.log('[prevent_copy]',prevent_copy)
-out=prevent_copy(out)
+// const prevent_copy = require('./prevent_copy').prevent_copy;
+// const { argv } = require('process');
+// //console.log('[prevent_copy]',prevent_copy)
+// out=prevent_copy(out)
 
 out=`<!DOCTYPE html>
 <html>
@@ -486,6 +486,7 @@ out=`<!DOCTYPE html>
         ${zip_css(style)}
     </style>
     <title>${title}</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 `+out
