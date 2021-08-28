@@ -497,4 +497,3 @@ out+='</body>\n</html>\n'
 fs.writeFile('tmp.html',out, err=>{
     if(err) console.log(err)
 })
-
